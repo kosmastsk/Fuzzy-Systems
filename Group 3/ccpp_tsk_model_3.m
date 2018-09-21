@@ -2,11 +2,11 @@
 % Kosmas Tsiakas 8255
 % Regression with TSK models 
 % Cobined Cycle Power Plant (CCPP) dataset from UCI repository
-tic
+
 %% CLEAR
 clear all;
 close all;
-
+tic
 %% BEGIN
 fprintf('\n *** begin %s ***\n\n',mfilename);
 
@@ -23,14 +23,14 @@ check_data = CCPP(round(0.8*9568)+1 : end, :); % 20% is for testing
 
 %% TRAIN TSK MODEL
 
-%% MODEL 1  - 2 MF - SINGLETON OUTPUT
-fprintf('\n *** TSK Model 1\n');
+%% MODEL 3  - 2 MF - POLYNOMIAL OUTPUT
+fprintf('\n *** TSK Model 3\n');
 
 % Set the options, 
 opt = genfisOptions('GridPartition');
 opt.NumMembershipFunctions = [2 2 2 2]; % Two mf for each input variable
 opt.InputMembershipFunctionType = ["gbellmf" "gbellmf" "gbellmf" "gbellmf"]; % Bell-shaped
-opt.OutputMembershipFunctionType = 'constant';
+opt.OutputMembershipFunctionType = 'linear';
 
 % Generate the FIS
 fprintf('\n *** Generating the FIS\n');
@@ -59,8 +59,8 @@ subplot(2,2,4);
 plot(x,mf);
 xlabel('input 4 - V (gbellmf)');
 
-suptitle('TSK model 1 : membership functions before training');
-saveas(gcf, 'TSK_model_1/mf_before_training.png');
+suptitle('TSK model 3 : membership functions before training');
+saveas(gcf, 'TSK_model_3/mf_before_training.png');
 
 % Tune the fis
 fprintf('\n *** Tuning the FIS\n');
@@ -97,18 +97,18 @@ figure;
 plot(1:length(check_data),check_data(:,5),'*r',1:length(check_data),output, '.b');
 title('Output');
 legend('Reference Outputs','Model Outputs');
-saveas(gcf,'TSK_model_1/output.png')
+saveas(gcf,'TSK_model_3/output.png')
 
 figure;
 plot(error);
 title('Prediction Errors');
-saveas(gcf,'TSK_model_1/error.png')
+saveas(gcf,'TSK_model_3/error.png')
 
 figure;
 plot(1:length(trainError),trainError,1:length(trainError),chkError);
 title('Learning Curve');
 legend('Traning Set', 'Check Set');
-saveas(gcf,'TSK_model_1/learningcurves.png')
+saveas(gcf,'TSK_model_3/learningcurves.png')
 
 % Plot the input membership functions after training
 figure;
@@ -133,13 +133,13 @@ subplot(2,2,4);
 plot(x,mf);
 xlabel('input 4 - V');
 
-suptitle('TSK model 1 : membership functions after training');
-saveas(gcf, 'TSK_model_1/mf_after_training.png');
+suptitle('TSK model 3 : membership functions after training');
+saveas(gcf, 'TSK_model_3/mf_after_training.png');
 
 
 fprintf('MSE = %f RMSE = %f R^2 = %f NMSE = %f NDEI = %f\n', mse, rmse, r2, nmse, ndei)
 
 toc
 
-%% MSE = 18.634204 RMSE = 4.316735 R^2 = 0.935468 NMSE = 0.064532 NDEI = 0.254032
-%% Elapsed time is 69.167498 seconds.
+%% MSE = 17.633409 RMSE = 4.199215 R^2 = 0.938934 NMSE = 0.061066 NDEI = 0.247116
+%% Elapsed time is 223.149369 seconds.
