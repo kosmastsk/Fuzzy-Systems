@@ -1,7 +1,7 @@
-% Fuzzy Systems 2018 - Group 3 - Ser06
+% Fuzzy Systems 2018 - Group 4 - Ser01
 % Kosmas Tsiakas 8255
-% Regression with TSK models
-% Bank dataset from delve repository
+% Classification with TSK models
+% Wifi-localization dataset from UCI repository
 
 %% CLEAR
 clear all;

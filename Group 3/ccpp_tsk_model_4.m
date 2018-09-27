@@ -21,7 +21,25 @@ training_data = CCPP(1 : round(0.6*9568), :); % 60% of the dataset is for traini
 validation_data = CCPP(round(0.6*9568)+1 : round(0.8 * 9568), :); % 20% is for evaluation
 check_data = CCPP(round(0.8*9568)+1 : end, :); % 20% is for testing
 
-% TRAIN TSK MODEL
+%% NORMALIZE DATA
+% Normalize each set differently so that they are separated through the
+% whole process
+training_data_min = min(training_data(:));
+training_data_max = max(training_data(:));
+training_data = (training_data - training_data_min) / (training_data_max - training_data_min); % Scaled to [0, 1]
+training_data = training_data * 2 - 1;
+
+validation_data_min = min(validation_data(:));
+validation_data_max = max(validation_data(:));
+validation_data = (validation_data - validation_data_min) / (validation_data_max - validation_data_min); % Scaled to [0, 1]
+validation_data = validation_data * 2 - 1;
+
+check_data_min = min(check_data(:));
+check_data_max = max(check_data(:));
+check_data = (check_data - check_data_min) / (check_data_max - check_data_min); % Scaled to [0, 1]
+check_data = check_data * 2 - 1;
+
+%% TRAIN TSK MODEL
 
 %% MODEL 2  - 3 MF - SINGLETON OUTPUT
 fprintf('\n *** TSK Model 4\n');
@@ -68,7 +86,7 @@ fprintf('\n *** Tuning the FIS\n');
 % The fis structure already exists
 % set the validation data to avoid overfitting
 % display training progress information
-anfis_opt = anfisOptions('InitialFIS', init_fis, 'EpochNumber', 600, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_data);
+anfis_opt = anfisOptions('InitialFIS', init_fis, 'EpochNumber', 400, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_data);
 
 [trn_fis, trainError, stepSize, chkFIS, chkError] = anfis(training_data, anfis_opt);
 
@@ -136,10 +154,9 @@ xlabel('input 4 - V');
 suptitle('TSK model 4 : membership functions after training');
 saveas(gcf, 'TSK_model_4/mf_after_training.png');
 
-
 fprintf('MSE = %f RMSE = %f R^2 = %f NMSE = %f NDEI = %f\n', mse, rmse, r2, nmse, ndei)
 
 toc
 
-%% MSE = 16.873637 RMSE = 4.107753 R^2 = 0.941565 NMSE = 0.058422 NDEI = 0.241707
-%% Elapsed time is 4837.748601 seconds.
+%% MSE = 0.000063 RMSE = 0.007924 R^2 = 0.942224 NMSE = 0.056685 NDEI = 0.238085
+%% Elapsed time is 3552.950725 seconds.

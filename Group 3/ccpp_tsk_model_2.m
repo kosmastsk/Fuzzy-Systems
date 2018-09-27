@@ -21,7 +21,25 @@ training_data = CCPP(1 : round(0.6*9568), :); % 60% of the dataset is for traini
 validation_data = CCPP(round(0.6*9568)+1 : round(0.8 * 9568), :); % 20% is for evaluation
 check_data = CCPP(round(0.8*9568)+1 : end, :); % 20% is for testing
 
-% TRAIN TSK MODEL
+%% NORMALIZE DATA
+% Normalize each set differently so that they are separated through the
+% whole process
+training_data_min = min(training_data(:));
+training_data_max = max(training_data(:));
+training_data = (training_data - training_data_min) / (training_data_max - training_data_min); % Scaled to [0, 1]
+training_data = training_data * 2 - 1;
+
+validation_data_min = min(validation_data(:));
+validation_data_max = max(validation_data(:));
+validation_data = (validation_data - validation_data_min) / (validation_data_max - validation_data_min); % Scaled to [0, 1]
+validation_data = validation_data * 2 - 1;
+
+check_data_min = min(check_data(:));
+check_data_max = max(check_data(:));
+check_data = (check_data - check_data_min) / (check_data_max - check_data_min); % Scaled to [0, 1]
+check_data = check_data * 2 - 1;
+
+%% TRAIN TSK MODEL
 
 %% MODEL 2  - 3 MF - SINGLETON OUTPUT
 fprintf('\n *** TSK Model 2\n');
@@ -140,3 +158,5 @@ saveas(gcf, 'TSK_model_2/mf_after_training.png');
 fprintf('MSE = %f RMSE = %f R^2 = %f NMSE = %f NDEI = %f\n', mse, rmse, r2, nmse, ndei)
 
 toc
+%% MSE = 0.000067 RMSE = 0.008178 R^2 = 0.938462 NMSE = 0.060279 NDEI = 0.245518
+%% Elapsed time is 587.489836 seconds.

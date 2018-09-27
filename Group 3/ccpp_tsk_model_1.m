@@ -21,6 +21,24 @@ training_data = CCPP(1 : round(0.6*9568), :); % 60% of the dataset is for traini
 validation_data = CCPP(round(0.6*9568)+1 : round(0.8 * 9568), :); % 20% is for evaluation
 check_data = CCPP(round(0.8*9568)+1 : end, :); % 20% is for testing
 
+%% NORMALIZE DATA
+% Normalize each set differently so that they are separated through the
+% whole process
+training_data_min = min(training_data(:));
+training_data_max = max(training_data(:));
+training_data = (training_data - training_data_min) / (training_data_max - training_data_min); % Scaled to [0, 1]
+training_data = training_data * 2 - 1;
+
+validation_data_min = min(validation_data(:));
+validation_data_max = max(validation_data(:));
+validation_data = (validation_data - validation_data_min) / (validation_data_max - validation_data_min); % Scaled to [0, 1]
+validation_data = validation_data * 2 - 1;
+
+check_data_min = min(check_data(:));
+check_data_max = max(check_data(:));
+check_data = (check_data - check_data_min) / (check_data_max - check_data_min); % Scaled to [0, 1]
+check_data = check_data * 2 - 1;
+
 %% TRAIN TSK MODEL
 
 %% MODEL 1  - 2 MF - SINGLETON OUTPUT
@@ -141,5 +159,5 @@ fprintf('MSE = %f RMSE = %f R^2 = %f NMSE = %f NDEI = %f\n', mse, rmse, r2, nmse
 
 toc
 
-%% MSE = 18.634204 RMSE = 4.316735 R^2 = 0.935468 NMSE = 0.064532 NDEI = 0.254032
-%% Elapsed time is 69.167498 seconds.
+%% MSE = 0.000071 RMSE = 0.008428 R^2 = 0.934630 NMSE = 0.064043 NDEI = 0.253067
+%% Elapsed time is 66.258180 seconds.
