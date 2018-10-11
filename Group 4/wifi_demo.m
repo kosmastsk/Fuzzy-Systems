@@ -11,7 +11,7 @@ close all;
 fprintf('\n *** begin %s ***\n\n', mfilename);
 
 %% READ DATA
-load wifi - localization.dat
+load wifi-localization.dat
 % 2000 instances with 7 features each
 data = wifi_localization;
 NR = [4 8 12 16]; % number of rules
@@ -87,19 +87,26 @@ k = zeros(1, length(NR));
 
 for r = 1 : length(NR)
     fprintf('\n *** Train TSK Model %d \n', r);
- 
-    % Set the options,
-    opt = genfisOptions('FCMClustering');
-    opt.FISType = 'sugeno';
-    opt.NumClusters = NR(r);
-    opt.Exponent = 2;
-    opt.MaxNumIteration = 100;
-    opt.MinImprovement = 1e - 5;
-    opt.Verbose = false;
- 
+    % For matlab > 2017a
+    %     % Set the options,
+    %     opt = genfisOptions('FCMClustering');
+    %     opt.FISType = 'sugeno';
+    %     opt.NumClusters = NR(r);
+    %     opt.Exponent = 2;
+    %     opt.MaxNumIteration = 100;
+    %     opt.MinImprovement = 1e-5;
+    %     opt.Verbose = false;
+    %
     % Generate the FIS
     fprintf('\n *** Generating the FIS\n');
-    init_fis = genfis(training_data(:, 1:7), training_data(:, 8), opt);
+    %     init_fis = genfis(training_data(:, 1:7), training_data(:, 8), opt);
+ 
+    init_fis = genfis3(training_data(:, 1:7), training_data(:, 8), 'sugeno', NR(r));
+ 
+    for m = 1 : length(init_fis.output.mf)
+        init_fis.output.mf(m).type = 'constant';
+        init_fis.output.mf(m).params = rand(); % range [-5, 5]
+    end
  
     % plot input mf
     figure;
@@ -160,15 +167,16 @@ for r = 1 : length(NR)
     end
     producers_acc{r} = pa;
     users_acc{r} = ua;
- 
+
     % k
-    xii = 0;
-    xirxic = 0;
-    for i = 1 : 4
-        xii = xii + error_matrix(i, i);
-        xirxic = pa(i) * ua(i);
-    end
-    k(r) = (N * xii - xirxic) / (N ^ 2 - xirxic);
+    p1 = sum(error_matrix(1, :)) * sum(error_matrix(:, 1)) / N ^ 2;
+    p2 = sum(error_matrix(2, :)) * sum(error_matrix(:, 2)) / N ^ 2;
+    p3 = sum(error_matrix(3, :)) * sum(error_matrix(:, 3)) / N ^ 2;
+    p4 = sum(error_matrix(4, :)) * sum(error_matrix(:, 4)) / N ^ 2;
+ 
+    pe = p1 + p2 + p3 + p4;
+ 
+    k(r) = (overall_acc(r) - pe) / (1 - pe);
  
     % Plot the input membership functions after training
     figure;
@@ -209,6 +217,15 @@ saveas(gcf, 'k_value.png');
 
 save('error_matrices', 'error_matrices');
 save('overall_acc', 'overall_acc');
+save('k', 'k');
+save('producers_acc', 'producers_acc');
+save('users_acc', 'users_acc');
+
+save('error_matrices', 'error_matrices');
+save('overall_acc', 'overall_acc');
+save('producers_acc', 'producers_acc');
+save('users_acc', 'users_acc');
+save('k', 'k');
 
 toc
-%% Elapsed time is 186.180470 seconds.
+%% Elapsed time is 90.226460 seconds.

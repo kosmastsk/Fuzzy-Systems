@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.42"
+    ComputedModelVersion    "1.47"
     NumModelReferences	    0
     NumTestPointedSignals   4
     TestPointedSignal {
@@ -91,7 +91,7 @@ Model {
       $ObjectID		      3
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [0.0, 24.0, 960.0, 1056.0]
+      Location		      [0.0, 24.0, 1920.0, 1056.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		4
@@ -115,9 +115,9 @@ Model {
 	IsActive		[1]
 	ViewObjType		"SimulinkTopLevel"
 	LoadSaveID		"0"
-	Extents			[922.0, 879.0]
-	ZoomFactor		[0.8]
-	Offset			[-273.78813122239, -353.955456282864]
+	Extents			[1882.0, 907.0]
+	ZoomFactor		[1.25]
+	Offset			[0.0, -1.0577094554901123]
       }
       Object {
 	$PropName		"DockComponentsInfo"
@@ -137,11 +137,11 @@ Model {
       "AAAAAAA+wAAABYARABvAGMAawBXAGkAZABnAGUAdAA0AAAAAAD/////AAAAAAAAAAD7AAAAUgBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0Ac"
       "ABvAG4AZQBuAHQALwBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQAAAAAQQAAAn8AAABiAP///wAAAAEAAAAAAAAAAPwCA"
       "AAAAfsAAABUAEcATABVAEUAMgA6AFAAcgBvAHAAZQByAHQAeQBJAG4AcwBwAGUAYwB0AG8AcgAvAFAAcgBvAHAAZQByAHQAeQAgAEkAbgBzAHAAZ"
-      "QBjAHQAbwByAAAAAAD/////AAAALAD///8AAAPAAAADrQAAAAEAAAACAAAAAQAAAAL8AAAAAQAAAAIAAAAP/////wAAAAAA/////wAAAAAAAAAA/"
+      "QBjAHQAbwByAAAAAAD/////AAAALAD///8AAAeAAAADyQAAAAEAAAACAAAAAQAAAAL8AAAAAQAAAAIAAAAP/////wAAAAAA/////wAAAAAAAAAA/"
       "////wEAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/"
       "////wEAAACA/////wAAAAAAAAAA/////wEAAADo/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wEAAAFo/////wAAAAAAAAAA/"
-      "////wAAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wEAAANc/////wAAAAAAAAAA/"
-      "////wEAAAOO/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA"
+      "////wAAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wEAAAOH/////wAAAAAAAAAA/"
+      "////wEAAAO5/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA"
     }
   }
   HideAutomaticNames	  on
@@ -151,9 +151,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "root"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Sep 10 23:32:50 2018"
-  RTWModifiedTimeStamp	  458523121
-  ModelVersionFormat	  "1.%<AutoIncrement:42>"
+  LastModifiedDate	  "Fri Oct 12 01:32:46 2018"
+  RTWModifiedTimeStamp	  461208647
+  ModelVersionFormat	  "1.%<AutoIncrement:47>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -842,7 +842,7 @@ Model {
 	      Version		      "1.17.0"
 	      Array {
 		Type			"Cell"
-		Dimension		19
+		Dimension		18
 		Cell			"GeneratePreprocessorConditionals"
 		Cell			"IncludeMdlTerminateFcn"
 		Cell			"GenerateAllocFcn"
@@ -861,7 +861,6 @@ Model {
 		Cell			"ExistingSharedCode"
 		Cell			"RemoveResetFunc"
 		Cell			"RemoveDisableFunc"
-		Cell			"CombineOutputUpdateFcns"
 		PropName		"DisabledProps"
 	      }
 	      Description	      ""
@@ -1222,7 +1221,7 @@ Model {
   }
   System {
     Name		    "control_scenario2"
-    Location		    [0, 24, 960, 1080]
+    Location		    [0, 24, 1920, 1080]
     Open		    on
     PortBlocksUseCompactNotation off
     ModelBrowserVisibility  off
@@ -1235,7 +1234,7 @@ Model {
     TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "80"
+    ZoomFactor		    "125"
     ReportName		    "simulink-default.rpt"
     SIDHighWatermark	    "66"
     Block {
@@ -1253,7 +1252,7 @@ Model {
       }
       System {
 	Name			"FZ-PI Controller"
-	Location		[10, 34, 970, 1090]
+	Location		[0, 24, 1920, 1080]
 	Open			off
 	PortBlocksUseCompactNotation off
 	ModelBrowserVisibility	off
@@ -1266,7 +1265,7 @@ Model {
 	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"150"
+	ZoomFactor		"100"
 	Block {
 	  BlockType		  Inport
 	  Name			  "e"
@@ -1308,7 +1307,7 @@ Model {
 	  SID			  "48"
 	  Position		  [715, 72, 755, 108]
 	  ZOrder		  18
-	  Gain			  "10"
+	  Gain			  "12"
 	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
 	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
@@ -1319,7 +1318,7 @@ Model {
 	  SID			  "41"
 	  Position		  [280, 124, 345, 156]
 	  ZOrder		  11
-	  Gain			  "0.3*1"
+	  Gain			  "0.3*3"
 	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
 	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
@@ -1441,6 +1440,7 @@ Model {
 	  SID			  "40"
 	  Position		  [280, 27, 320, 63]
 	  ZOrder		  10
+	  Gain			  "3"
 	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
 	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
@@ -1673,20 +1673,20 @@ Model {
       ScopeSpecificationString "Simulink.scopes.TimeScopeBlockCfg('CurrentConfiguration', extmgr.ConfigurationSet(extm"
       "gr.Configuration('Core','General UI',true),extmgr.Configuration('Core','Source UI',true),extmgr.Configuration('S"
       "ources','WiredSimulink',true),extmgr.Configuration('Visuals','Time Domain',true,'SerializedDisplays',{struct('Mi"
-      "nYLimReal','-6.37596','MaxYLimReal','57.38361','YLabelReal','','MinYLimMag','0.00000','MaxYLimMag','57.38361','L"
+      "nYLimReal','-6.51236','MaxYLimReal','58.61125','YLabelReal','','MinYLimMag','0.00000','MaxYLimMag','58.61125','L"
       "egendVisibility','Off','XGrid',true,'YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0],'AxesTickColor',[0.686"
       "274509803922 0.686274509803922 0.686274509803922],'ColorOrder',[1 1 0.0666666666666667;0.0745098039215686 0.6235"
       "29411764706 1;1 0.411764705882353 0.16078431372549;0.392156862745098 0.831372549019608 0.0745098039215686;0.7176"
       "47058823529 0.274509803921569 1;0.0588235294117647 1 1;1 0.0745098039215686 0.650980392156863],'Title','%<Signal"
-      "Label>','LinePropertiesCache',{{}},'UserDefinedChannelNames',{{}},'NumLines',2,'LineNames',{{'Signal Builder/2',"
-      "'System'}},'ShowContent',true,'Placement',1)},'TimeUnits','seconds','DisplayPropertyDefaults',struct('MinYLimRea"
-      "l','-6.37596','MaxYLimReal','57.38361','YLabelReal','','MinYLimMag','0.00000','MaxYLimMag','57.38361','LegendVis"
-      "ibility','Off','XGrid',true,'YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0],'AxesTickColor',[0.68627450980"
-      "3922 0.686274509803922 0.686274509803922],'ColorOrder',[0.0745098039215686 0.623529411764706 1;1 0.4117647058823"
-      "53 0.16078431372549;1 1 0.0666666666666667;0.717647058823529 0.274509803921569 1;0.392156862745098 0.83137254901"
-      "9608 0.0745098039215686;0.0588235294117647 1 1;1 0.0745098039215686 0.650980392156863])),extmgr.Configuration('T"
-      "ools','Plot Navigation',true,'PreviousAutoscale','XY'),extmgr.Configuration('Tools','Measurements',true,'Version"
-      "','2017a')),'Version','2017a','Position',[643 15 1203 814],'VisibleAtModelOpen','on','OpenAtMdlStart',true)"
+      "Label>','LinePropertiesCache',{{}},'UserDefinedChannelNames',{{}},'NumLines',2,'LineNames',{{'reference','System"
+      "'}},'ShowContent',true,'Placement',1)},'TimeUnits','seconds','DisplayPropertyDefaults',struct('MinYLimReal','-6."
+      "51236','MaxYLimReal','58.61125','YLabelReal','','MinYLimMag','0.00000','MaxYLimMag','58.61125','LegendVisibility"
+      "','Off','XGrid',true,'YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0],'AxesTickColor',[0.686274509803922 0."
+      "686274509803922 0.686274509803922],'ColorOrder',[0.0745098039215686 0.623529411764706 1;1 0.411764705882353 0.16"
+      "078431372549;1 1 0.0666666666666667;0.717647058823529 0.274509803921569 1;0.392156862745098 0.831372549019608 0."
+      "0745098039215686;0.0588235294117647 1 1;1 0.0745098039215686 0.650980392156863])),extmgr.Configuration('Tools','"
+      "Plot Navigation',true,'PreviousAutoscale','XY'),extmgr.Configuration('Tools','Measurements',true,'Version','2017"
+      "a')),'Version','2017a','Position',[1 1 1920 1001],'OpenAtMdlStart',true)"
       NumInputPorts	      "1"
     }
     Block {
@@ -1708,7 +1708,7 @@ Model {
       StopFcn		      "sigbuilder_block('stop');"
       NameChangeFcn	      "sigbuilder_block('namechange');"
       ClipboardFcn	      "sigbuilder_block('clipboard');"
-      OpenFcn		      "sigbuilder_block('open',[136.5 202.5 558 422.25 ]);"
+      OpenFcn		      "sigbuilder_block('open',[136.5 181.5 558 422.25 ]);"
       CloseFcn		      "sigbuilder_block('close');"
       RequestExecContextInheritance off
       MaskHideContents	      on
@@ -1913,18 +1913,20 @@ Model {
       DstPort		      1
     }
     Line {
-      ZOrder		      71
+      Name		      "reference"
+      ZOrder		      83
+      Labels		      [0, 0]
       SrcBlock		      "Signal Builder"
-      SrcPort		      2
-      Points		      [20, 0; 0, -20]
+      SrcPort		      1
+      Points		      [22, 0]
       Branch {
-	ZOrder			73
-	Points			[0, -42; 508, 0; 0, 32]
+	ZOrder			85
+	Points			[0, -42; 518, 0; 0, 32]
 	DstBlock		"Mux"
 	DstPort			1
       }
       Branch {
-	ZOrder			72
+	ZOrder			84
 	DstBlock		"Sum"
 	DstPort			1
       }

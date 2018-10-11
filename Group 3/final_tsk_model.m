@@ -23,13 +23,13 @@ end
 
 % Keep only the number of features we want and not all of them
 % Specify their order and later use the ranks array
-[ranks, weights] = relieff(Bank(:, 1:32), Bank(:, 33), 100);
+[ranks, weights] = relieff(Bank(:, 1:32), Bank(:, end), 100);
 
 %% FINAL TSK MODEL
-fprintf('\n *** TSK Model with 21 features and 4 rules - Substractive Clustering\n');
+fprintf('\n *** TSK Model with 15 features and radii 1 - Substractive Clustering\n');
 
-f = 21;
-r = 4;
+f = 15;
+radii = 1;
 
 %% SPLIT DATASET
 fprintf('\n *** Dataset splitting\n');
@@ -54,31 +54,18 @@ for i = 1 : size(training_data,2)-1
     check_data(:,i) = check_data(:,i) * 2 - 1;
 end
 
-training_data_x = training_data(:,ranks(1:f)c);
-training_data_y = training_data(:,33);
+training_data_x = training_data(:,ranks(1:f));
+training_data_y = training_data(:,end);
 
 validation_data_x = validation_data(:,ranks(1:f));
-validation_data_y = validation_data(:,33);
+validation_data_y = validation_data(:,end);
 
 check_data_x = check_data(:,ranks(1:f));
-check_data_y = check_data(:,33);
+check_data_y = check_data(:,end);
 
 %% TRAIN TSK MODEL
 
 %% MODEL WITH 21 FEATURES AND 4 RULES
-
-% Set the options
-opt = genfisOptions('SubtractiveClustering');
-% Default options
-opt.ClusterInfluenceRange = 0.5;
-opt.DataScale = 'auto';
-opt.SquashFactor = 1.25;
-opt.AcceptRatio = 0.5;
-opt.RejectRatio = 0.5;
-opt.Verbose = false;
-% C by N array, where C in the number of clusters
-% and N is the number of inputs and outputs
-opt.CustomClusterCenters = zeros(r, f + 1);
 
 % Generate the FIS
 fprintf('\n *** Generating the FIS\n');
@@ -87,8 +74,8 @@ fprintf('\n *** Generating the FIS\n');
 % partitioning and only the most important features
 % As output data is just the last column of the test_data that
 % are left
-init_fis = genfis(training_data_x, training_data_y, opt);
-
+init_fis = genfis2(training_data_x, training_data_y, radii);
+rules = length(init_fis.rule)
 % Plot some input membership functions
 figure;
 for i = 1 : f
@@ -107,20 +94,20 @@ subplot(2,2,1);
 plot(x,mf);
 xlabel('input 1');
 
-[x, mf] = plotmf(init_fis, 'input', 10);
+[x, mf] = plotmf(init_fis, 'input', 2);
 subplot(2,2,2);
 plot(x,mf);
-xlabel('input 10');
+xlabel('input 2');
 
-[x, mf] = plotmf(init_fis, 'input', 14);
+[x, mf] = plotmf(init_fis, 'input', 3);
 subplot(2,2,3);
 plot(x,mf);
-xlabel('input 14');
+xlabel('input 3');
 
-[x, mf] = plotmf(init_fis, 'input', 20);
+[x, mf] = plotmf(init_fis, 'input', 4);
 subplot(2,2,4);
 plot(x,mf);
-xlabel('input 20');
+xlabel('input 4');
 
 suptitle('Final TSK model : some membership functions before training');
 saveas(gcf, 'Final_TSK_model/some_mf_before_training.png');
@@ -131,8 +118,7 @@ fprintf('\n *** Tuning the FIS\n');
 % Set some options
 % The fis structure already exists
 % set the validation data to avoid overfitting
-
-anfis_opt = anfisOptions('InitialFIS', init_fis, 'EpochNumber', 20, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'DisplayStepSize', 0, 'DisplayFinalResults', 0, 'ValidationData', [validation_data_x validation_data_y]);
+anfis_opt = anfisOptions('InitialFIS', init_fis, 'EpochNumber', 150, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'DisplayStepSize', 0, 'DisplayFinalResults', 0, 'ValidationData', [validation_data_x validation_data_y]);
 
 [trn_fis, trainError, stepSize, chkFIS, chkError] = anfis([training_data_x training_data_y], anfis_opt);
 
@@ -140,7 +126,7 @@ anfis_opt = anfisOptions('InitialFIS', init_fis, 'EpochNumber', 20, 'DisplayANFI
 fprintf('\n *** Evaluating the FIS\n');
 
 % No need to specify specific options for this, keep the defaults
-output = evalfis(check_data_x, chkFIS)
+output = evalfis(check_data_x, chkFIS);
 
 %% METRICS
 error = output - check_data_y;
@@ -193,20 +179,20 @@ subplot(2,2,1);
 plot(x,mf);
 xlabel('input 1');
 
-[x, mf] = plotmf(chkFIS, 'input', 10);
+[x, mf] = plotmf(chkFIS, 'input', 2);
 subplot(2,2,2);
 plot(x,mf);
-xlabel('input 10');
+xlabel('input 2');
 
-[x, mf] = plotmf(chkFIS, 'input', 14);
+[x, mf] = plotmf(chkFIS, 'input', 3);
 subplot(2,2,3);
 plot(x,mf);
-xlabel('input 14');
+xlabel('input 3');
 
-[x, mf] = plotmf(chkFIS, 'input', 20);
+[x, mf] = plotmf(chkFIS, 'input', 4);
 subplot(2,2,4);
 plot(x,mf);
-xlabel('input 20');
+xlabel('input 4');
 
 suptitle('Final TSK model : some membership functions after training');
 saveas(gcf, 'Final_TSK_model/after.png');
@@ -214,5 +200,5 @@ saveas(gcf, 'Final_TSK_model/after.png');
 fprintf('MSE = %f RMSE = %f R^2 = %f NMSE = %f NDEI = %f\n', mse, rmse, r2, nmse, ndei)
 
 toc
-%% MSE = 0.005146 RMSE = 0.071734 R^2 = 0.804100 NMSE = 0.195152 NDEI = 0.441760
-%% Elapsed time is 325.806633 seconds.
+%% MSE = 0.004832 RMSE = 0.069511 R^2 = 0.837169 NMSE = 0.162823 NDEI = 0.403513
+%% Elapsed time is 102.861282 seconds.

@@ -26,17 +26,14 @@ check_data = CCPP(round(0.8*9568)+1 : end, :); % 20% is for testing
 % whole process
 training_data_min = min(training_data(:));
 training_data_max = max(training_data(:));
+
 training_data = (training_data - training_data_min) / (training_data_max - training_data_min); % Scaled to [0, 1]
 training_data = training_data * 2 - 1;
 
-validation_data_min = min(validation_data(:));
-validation_data_max = max(validation_data(:));
-validation_data = (validation_data - validation_data_min) / (validation_data_max - validation_data_min); % Scaled to [0, 1]
+validation_data = (validation_data - training_data_min) / (training_data_max - training_data_min); % Scaled to [0, 1]
 validation_data = validation_data * 2 - 1;
 
-check_data_min = min(check_data(:));
-check_data_max = max(check_data(:));
-check_data = (check_data - check_data_min) / (check_data_max - check_data_min); % Scaled to [0, 1]
+check_data = (check_data - training_data_min) / (training_data_max - training_data_min); % Scaled to [0, 1]
 check_data = check_data * 2 - 1;
 
 %% TRAIN TSK MODEL
@@ -44,15 +41,18 @@ check_data = check_data * 2 - 1;
 %% MODEL 3  - 2 MF - POLYNOMIAL OUTPUT
 fprintf('\n *** TSK Model 3\n');
 
+% for matlab > 2017a
 % Set the options, 
-opt = genfisOptions('GridPartition');
-opt.NumMembershipFunctions = [2 2 2 2]; % Two mf for each input variable
-opt.InputMembershipFunctionType = ["gbellmf" "gbellmf" "gbellmf" "gbellmf"]; % Bell-shaped
-opt.OutputMembershipFunctionType = 'linear';
+% opt = genfisOptions('GridPartition');
+% opt.NumMembershipFunctions = [2 2 2 2]; % Two mf for each input variable
+% opt.InputMembershipFunctionType = ["gbellmf" "gbellmf" "gbellmf" "gbellmf"]; % Bell-shaped
+% opt.OutputMembershipFunctionType = 'linear';
 
 % Generate the FIS
 fprintf('\n *** Generating the FIS\n');
-init_fis = genfis(training_data(:, 1:4), training_data(:, 5), opt);
+% init_fis = genfis(training_data(:, 1:4), training_data(:, 5), opt);
+
+init_fis = genfis1(training_data, 2, 'gbellmf', 'linear');
 
 % Plot the input membership functions
 figure;
@@ -86,7 +86,7 @@ fprintf('\n *** Tuning the FIS\n');
 % The fis structure already exists
 % set the validation data to avoid overfitting
 % display training progress information
-anfis_opt = anfisOptions('InitialFIS', init_fis, 'EpochNumber', 600, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_data);
+anfis_opt = anfisOptions('InitialFIS', init_fis, 'EpochNumber', 400, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_data);
 
 [trn_fis, trainError, stepSize, chkFIS, chkError] = anfis(training_data, anfis_opt);
 
@@ -159,5 +159,5 @@ fprintf('MSE = %f RMSE = %f R^2 = %f NMSE = %f NDEI = %f\n', mse, rmse, r2, nmse
 
 toc
 
-%% MSE = 0.000067 RMSE = 0.008188 R^2 = 0.938308 NMSE = 0.060399 NDEI = 0.245763
-%% Elapsed time is 207.308587 seconds.
+%% MSE = 0.000066 RMSE = 0.008104 R^2 = 0.939598 NMSE = 0.060402 NDEI = 0.245768
+%% Elapsed time is 133.913554 seconds.

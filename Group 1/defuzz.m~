@@ -1,0 +1,35 @@
+function defuzzfun = defuzz(xmf,ymf)
+   %%DEFUZZ is the implementation
+%find the local maxima and their x axis location
+    [peaks,locs]=findpeaks(ymf,xmf);
+    
+    total_area = 0;
+    weighted_area = 0;
+    for i=1:length(peaks)
+%calculate the area of the MFs
+        area(i) = (1/2)*0.66*peaks(i);          %for the rest Us
+        centroid = locs(i);                     %triangle MFs with 0.66 base
+        total_area = total_area+area(i);
+        weighted_area = weighted_area+area(i)*centroid;
+    end
+    if(ymf(1)~=0)                               %for U=NL
+        NL_area = (1/2)*0.33*ymf(1);            %triangle MFs with 0.33 base
+        fun_NL = @(w) (-(ymf(1)*3)*w.^2-2*ymf(1)*w);
+        q = integral(fun_NL,-1,-0.66);       
+        centroid_NL = q/NL_area;
+        total_area = total_area+NL_area;
+        weighted_area = weighted_area + centroid_NL*NL_area;
+    end    
+    if (ymf(end)~=0)                            %for U=PL
+        PL_area = (1/2)*0.33*ymf(end);          %triangle MFs with 0.33 base
+        fun_PL = @(w) ((ymf(end)*3)*w.^2-2*ymf(end)*w);
+        q = integral(fun_PL,0.66,1);       
+        centroid_PL = q/PL_area;
+        total_area = total_area+PL_area;
+        weighted_area = weighted_area + centroid_PL*PL_area;
+    end
+    %result
+    defuzzfun = weighted_area/total_area
+
+    
+end

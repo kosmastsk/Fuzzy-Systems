@@ -9,7 +9,7 @@ AndMethod='min'
 OrMethod='max'
 ImpMethod='min'
 AggMethod='max'
-DefuzzMethod='centroid'
+DefuzzMethod='customdefuzz'
 
 [Input1]
 Name='e'
@@ -81,7 +81,7 @@ MF7='PL':'trimf',[0.6667 1 1.333]
 3 1, 1 (1) : 1
 4 9, 7 (1) : 1
 4 8, 6 (1) : 1
-4 7, 7 (1) : 1
+4 7, 5 (1) : 1
 4 6, 4 (1) : 1
 4 5, 3 (1) : 1
 4 4, 2 (1) : 1
