@@ -28,7 +28,7 @@ Fuzzy Systems projects during 2018 academic season for ECE AUTH.
 ## Group 4
 #### Classification
 
-* Use of the [Wifi Localization dataset](https://archive.ics.uci.edu/ml/datasets/Wireless+Indoor+Localization) and the [Waveform Generation Dataset](http://archive.ics.uci.edu/ml/datasets/waveform+database+generator+(version+2)
+* Use of the [Wifi Localization dataset](https://archive.ics.uci.edu/ml/datasets/Wireless+Indoor+Localization) and the [Waveform Generation Dataset](http://archive.ics.uci.edu/ml/datasets/waveform+database+generator+(version+2))
 * Data pre-processing
 * Create different TSK models that are using the hybrid method for training (Backpropagation and Least Squares Method)
 * Use the Relieff algorithm to choose the most suitable features for training
